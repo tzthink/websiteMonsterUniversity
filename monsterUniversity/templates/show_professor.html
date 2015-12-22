@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+   <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+         <link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+</head>
+
+<body>
+  <div style="background-color:#E3F6CE">
+  <div class="container" style="background-color:white">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container" style="background-color:white">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="/">Monster University</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Academic <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/student">Student</a></li>
+               <li><a href="/professor">Professor</a></li>
+               <li><a href="/course">Course</a></li>
+               <li><a href="/seminar">Seminar</a></li>
+            </ul>
+         </li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Activity <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/fraternity">Fraternity</a></li>
+               <li><a href="/club">Club</a></li>
+               <li><a href="/activity">Activity</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Life <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/dining">Dining</a></li>
+               <li><a href="/housing">Housing</a></li>
+            </ul>
+         </li>
+                   <li><a href="/gpahome">GPA Calculator</a></li>
+      </ul>
+   </div>
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+      <form class="navbar-form navbar-right search" action="/search"  method=post role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" name=searchbox placeholder="Enter to Search" id="search_word">
+        </div>
+        <button type="submit" value="Search" class="btn btn-default">Submit</button>
+      </form>
+
+    <script>
+ $(document).ready(function (){
+     $(function () { $('#collapseOne').collapse('hide')});
+          $.getJSON("/autocompletelist",function(data){
+              console.log(data)
+            $( "#search_word" ).autocomplete({
+              source:data
+            });
+          });
+        });
+
+
+  </script>
+    <div class="container" style="background-color:white">
+</nav>
+
+<div class=page>
+<br>  <br><br>
+  <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" 
+          href="#collapseOne">
+          Filter
+        </a>
+      </h4>
+    </div>
+            <div class="center-block" style="width:200px">
+      <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <form class="form-horizontal" role="form" action="/professor" method=get>
+
+   <div class="form-group">
+      <label for="name">Research Area</label>
+      <select name=area id="area" class="form-control">
+                  <option></option>
+             {% for a in research %}
+         <option>{{a[0]}}</option>
+    {% endfor %}
+      </select>
+   </div>
+
+      <div class="form-group">
+      <label for="name">Professor Name</label>
+      <select name=prof id="prof" class="form-control">
+          <option></option>
+             {% for b in names %}
+         <option>{{b[0]}}</option>
+    {% endfor %}
+      </select>
+   </div>
+
+         <div class="form-group">
+      <label for="name">Order</label>
+      <select name=order id="order" class="form-control">
+                  <option></option>
+                  <option>Descending by Name</option>
+                  <option>Descending by Research</option>
+                  <option>Ascending by Name</option>
+                  <option>Ascending by Research</option>
+      </select>
+   </div>
+
+         <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+               <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+         </div>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <form class="form-horizontal" role="form" action="/deleteprofessor" method=post>
+    <div class="form-group">
+  <table class="table table-striped">
+   <thead>
+      <tr>
+         <th>&nbsp&nbsp&nbsp&nbsp&nbsp Photo</th>
+         <th>Name</th>
+         <th>Research Area</th>
+         <th>Delete</th>
+      </tr>
+   </thead>
+      <tbody>
+     {% for professor in professors %}
+      <tr>
+        <td><img src="../static/professor{{professor[2]}}.jpg" class="img-circle" alt="2" width="100" height="100"></img></td>
+         <td><a href="/professor/{{professor[0]}}">{{professor[0]}}</td>
+         <td>{{professor[1]}}</td>
+         <td><input type="checkbox" name=delete value="{{professor[0]}}"></td>
+    {% endfor %}   
+   </tbody>
+</table>
+<div>
+  <center>
+  <button type="submit" class="btn btn-default">Confirm Deletion</button>
+</center>
+</div>
+</div>
+</form>
+</div>
+<hr>
+
+<div class="center-block" style="width:800px">
+<form class="form-horizontal" role="form" action="/addprofessor" method=post enctype="multipart/form-data">
+   <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">Name</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="name" name=name
+            placeholder="Please enter name">
+      </div>
+   </div>
+
+   <div class="form-group">
+      <label for="lastname" class="col-sm-2 control-label">Research Area</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="research" name=research 
+            placeholder="Please enter research area">
+      </div>
+   </div>
+
+      <div class="form-group">
+      <label for="lastname" class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="title" name=title 
+            placeholder="Please enter title">
+      </div>
+   </div>
+
+
+    <!--++++++++++++++++++++++++++++++++++++++++picture upload-->
+
+
+
+<div class="form-group">
+    <label for="photo" class="col-sm-2 control-label">Photo</label>
+ <div class="col-sm-10">
+   <input type="file" name="file"><br /><br />
+       </div>
+        </div>
+
+<!--++++++++++++++++++++++++++++++++++++++++-->
+
+   <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+          <div class="center-block">
+          <button type="submit" class="btn btn-primary start">
+            Start upload
+        </button>
+      </div>
+      </div>
+   </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+
+<div>
+
+</div>
+
+  <script type="text/javascript">
+toastr.options.fadeOut = 2500;
+    $("#sub").click(function(){
+        toastr.info('Shared successfully', { timeOut: 10000 });
+    });
+    $("#name").click(function(){
+        toastr.info('Enter Professor name', { timeOut: 10000 });
+    });
+   $("#research").click(function(){
+        toastr.info('Enter Research area', { timeOut: 10000 });
+    });
+    $("#upload").click(function(){
+        toastr.info('Enter the name of the picture', { timeOut: 10000 });
+    });
+        $("#title").click(function(){
+        toastr.info('Enter the title', { timeOut: 10000 });
+    });
+
+      $("#pic").mouseover(function(){
+        toastr.info('I am cool~~~', { timeOut: 20000 });
+    });
+
+   $(function () { $('#collapseFour').collapse({
+      toggle: false
+   })});
+   $(function () { $('#collapseTwo').collapse('show')});
+   $(function () { $('#collapseThree').collapse('toggle')});
+   $(function () { $('#collapseOne').collapse('hide')});
+
+  </script>

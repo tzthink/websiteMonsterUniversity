@@ -1,0 +1,449 @@
+<!doctype html>
+<html>
+<!--+++++++++++++++++++++++++++++++++++++++++++GPACalculator-->
+<script>
+function gpacalculator(form) {
+    var numberOfcourses = 7
+
+    var totalpoints = 0
+    var totalcredithours = 0
+    for (var coursenumber = 1; coursenumber <= numberOfcourses ;
+coursenumber++) {
+        var gradeelement = "grade" + coursenumber
+        var credithourselement = "credithours" + coursenumber
+        var gradeselection =
+form.elements[gradeelement].options.selectedIndex
+        var gradenumber =
+form.elements[gradeelement].options[gradeselection].value
+        var credithours = parseFloat(form.elements[credithourselement].value)
+        if ((gradenumber > -1) && (credithours > 0)) {
+            totalpoints += (gradenumber * credithours)
+            totalcredithours += credithours
+        }
+    }
+    var gparesult = Math.round(100 * totalpoints / totalcredithours) / 100
+    document.forms["gpadata"].result.value = gparesult
+}
+</script>
+<!--+++++++++++++++++++++++++++++++++++++++++++GPACalculator-->
+<head>
+   <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container" style="background-color:white">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="/">Monster University</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Academic <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/student">Student</a></li>
+               <li><a href="/professor">Professor</a></li>
+               <li><a href="/course">Course</a></li>
+               <li><a href="/seminar">Seminar</a></li>
+            </ul>
+         </li>
+             <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Activity <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/fraternity">Fraternity</a></li>
+               <li><a href="/club">Club</a></li>
+               <li><a href="/activity">Activity</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Life <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/dining">Dining</a></li>
+               <li><a href="/housing">Housing</a></li>
+            </ul>
+         </li>
+          <li><a href="/gpahome">GPA Calculator</a></li>
+      </ul>
+   </div>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+      <form class="navbar-form navbar-right search" action="/search"  method=post role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" name=searchbox placeholder="Enter to Search" id="search_word">
+        </div>
+        <button type="submit" value="Search" class="btn btn-default">Submit</button>
+      </form>
+    <script>
+ $(document).ready(function (){
+          $.getJSON("/autocompletelist",function(data){
+              console.log(data)
+            $( "#search_word" ).autocomplete({
+              source:data
+            });
+          });
+        });
+
+  </script>
+</div>
+</nav>
+
+<div class=page>
+    <div style="background-color:#E3F6CE">
+  <center>
+    <div class="container">
+   <br><br><br><br>
+
+
+<!--+++++++++++++++++++++++++++++++++++++++++++GPACalculator-->
+<!-- #BeginEditable "Body" -->
+    <td width="530" valign="top"> 
+      <table width="530" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td class="smaller" bgcolor="#E3F6CE" width="530">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td colspan="2"> 
+            <table bgcolor=#E3F6CE border=0 cellspacing=0 width=530>
+              <tbody> 
+              <tr> 
+                <td valign=top width=529> 
+                  <table border=0 cellpadding=2 cellspacing=0 width=530>
+                    <tbody> 
+                    <tr> 
+                      <td bgcolor=#E3F6CE colspan="2" valign="top"> 
+                        <form name="gpadata" method="post">
+                          <center>
+                            <table width="334" border="0" cellspacing="0" cellpadding="0" bgcolor="#333333">
+                              <tr bgcolor="#E3F6CE"> 
+                                <td>
+                                  <center>
+                                    <font size="+3"><strong>GPA Calculator</strong></font> 
+                                  </center>
+
+                                </td>
+                              </tr>
+                              <tr> 
+                                <td> 
+                                  <hr>
+                                  <table border="0" cellspacing="0" cellpadding="5" width="330" align="center">
+                                    <tr bgcolor="#999999"> 
+                                      <td bgcolor="#999999" valign="bottom"> 
+                                        <p align="center"><font face="Arial, Helvetica, sans-serif"><b>Course</b></font></p>
+                                      </td>
+                                      <td> 
+                                        <p align="center"><font face="Arial, Helvetica, sans-serif"><b>Credit 
+                                          Hours</b></font></p>
+                                      </td>
+                                      <td width="60"> 
+                                        <p align="center"><font face="Arial, Helvetica, sans-serif"><b>Grade</b></font></p>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course1" id = "course1">
+                                        </center>
+                                      </td>
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours1" id = "credithours1">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade1" id = "grade1">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course2" id="course2">
+                                        </center>
+                                      </td>
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours2" id="credithours2">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade2" id="grade2">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course3" id="course3">
+                                        </center>
+                                      </td>
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours3" id="credithours3">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade3" id="grade3">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course4" id="course4">
+                                        </center>
+                                      </td>
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours4" id="credithours4">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade4" id="grade4">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course5" id="course5">
+                                        </center>
+                                      </td>
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours5" id="credithours5">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade5" id="grade5">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course6" id="course6">
+                                        </center>
+                                      </td>
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours6" id="credithours6">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade6" id="grade6">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                    <tr bgcolor="#999999"> 
+                                      <td> 
+                                        <center>
+                                          <input type="text" size="20" name="course7" id="course7">
+                                        </center>
+                                      </td>
+                                      <td bgcolor="#999999"> 
+                                        <center>
+                                          <input type="text" size="5" name="credithours7" id="credithours7">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <select name="grade7" id="grade7">
+                                            <option value="-1">Select 
+                                            <option value="4.0">A 
+                                            <option value="3.7">A- 
+                                            <option value="3.3">B+ 
+                                            <option value="3.0">B 
+                                            <option value="2.7">B- 
+                                            <option value="2.3">C+ 
+                                            <option value="2.0">C 
+                                            <option value="1.7">C- 
+                                            <option value="1.3">D+ 
+                                            <option value="1.0">D 
+                                            <option value="0.7">D- 
+                                            <option value="0.0">F 
+                                            <option value="-1">Select 
+                                            <option value="-1">P 
+                                            <option value="-1">NP 
+                                            <option value="-1">I 
+                                            <option value="-1">W 
+                                          </select>
+                                        </center>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <table width="330" border="0" cellspacing="0" cellpadding="0" align="center">
+                                    <tr bgcolor="#999999"> 
+                                      <td height="10"></td>
+                                    </tr>
+                                  </table>
+                                  <table width="330" border="0" cellspacing="0" cellpadding="5" align="center">
+                                    <tr bgcolor="#999999"> 
+                                      <td colspan="2"> 
+                                        <center>
+                                          <input type="button" name="calculate" value="Calculate Your GPA"
+onClick="gpacalculator(this.form)">
+                                          <input type="reset" name="reset" value="Clear">
+                                          <input type="button" value="Print"
+onClick="javascript: window.print()" name="button2">
+                                        </center>
+                                      </td>
+                                      <td width="60"> 
+                                        <center>
+                                          <input type="text" size="5" name="result">
+                                        </center>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr bgcolor="#999999"> 
+                                <td></td></tr></table>
+                          </center>
+                        </form>    
+                                          <hr>
+                                          <div class="center-block">
+     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img height="100px" width="300px" src="http://cdn.dolimg.com/monstersuniversity/assets/monsters_logo_small.jpg">     
+     </div>              
+        		</tr>
+        	</tr>
+        </tr>
+        <form action="gpacalculator" method="post" enctype="multipart/form-data">
+        <tr>
+		  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type=text name="studentidforscore" placeholder="Insert your ID" id="sid">
+		  <input type="submit" value="Insert Data to Calculator">
+      <hr>
+          <td class="smaller" bgcolor="#E3F6CE" width="530">&nbsp;</td>
+        </tr>
+        </form>                      
+</div>
+<!--+++++++++++++++++++++++++++++++++++++++++++GPACalculator-->

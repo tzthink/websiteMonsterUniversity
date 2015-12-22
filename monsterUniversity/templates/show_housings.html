@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+   <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div style="background-color:#E3F6CE">
+  <div class="container" style="background-color:white">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container" style="background-color:white">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="/">Monster University</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Academic <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/student">Student</a></li>
+               <li><a href="/professor">Professor</a></li>
+               <li><a href="/course">Course</a></li>
+               <li><a href="/seminar">Seminar</a></li>
+            </ul>
+         </li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Activity <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/fraternity">Fraternity</a></li>
+               <li><a href="/club">Club</a></li>
+               <li><a href="/activity">Activity</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Life <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/dining">Dining</a></li>
+               <li><a href="/housing">Housing</a></li>
+            </ul>
+         </li>
+                   <li><a href="#">GPA Calculator</a></li>
+      </ul>
+   </div>
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+      <form class="navbar-form navbar-right search" action="/search"  method=post role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" name=searchbox placeholder="Enter to Search" id="search_word">
+        </div>
+        <button type="submit" value="Search" class="btn btn-default">Submit</button>
+      </form>
+
+    <script>
+ $(document).ready(function (){
+          $.getJSON("/autocompletelist",function(data){
+              console.log(data)
+            $( "#search_word" ).autocomplete({
+              source:data
+            });
+          });
+        });
+
+
+  </script>
+    <div class="container" style="background-color:white">
+</nav>
+
+
+<div class=page>
+  <br><br>  <br><br>
+  <form class="form-horizontal" role="form" action="/deletehousing" method=post>
+    <div class="form-group">
+  <table class="table table-striped">
+   <thead>
+      <tr>
+         <th>Location</th>
+         <th>Price</th>
+         <th>Rating</th>
+         <th>Delete</th>
+      </tr>
+   </thead>
+      <tbody>
+     {% for housing in housings %}
+      <tr>
+         <td><a href="/housing/{{housing[1]}}">{{housing[1]}}</td>
+         <td>{{housing[2]}}</td>
+        <td>{{housing[3]}}</td>
+         <td><input type="checkbox" name=delete value="{{housing[1]}}"></td>
+    {% endfor %}
+   </tbody>
+</table>
+<div>
+  <center>
+  <button type="submit" class="btn btn-default">Confirm Deletion</button>
+</center>
+</div>
+</div>
+</form>
+</div>
+<hr>
+<div class=page>
+<div class="center-block" style="width:800px">
+<form class="form-horizontal" role="form" action="/addhousing" method=post>
+   <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">Location</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="name" name=name
+            placeholder="Please enter housing location">
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="lastname" class="col-sm-2 control-label">Price</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="research" name=research 
+            placeholder="Please enter price">
+      </div>
+   </div>
+   <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" class="btn btn-default">Insert</button>
+      </div>
+   </div>
+</form>
+</div>
+<hr>
+</div>
+
+</body>
+
+<div>
+
+</div>

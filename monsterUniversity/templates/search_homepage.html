@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+   <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container" style="background-color:white">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="/">Monster University</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Academic <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/student">Student</a></li>
+               <li><a href="/professor">Professor</a></li>
+               <li><a href="/course">Course</a></li>
+               <li><a href="/seminar">Seminar</a></li>
+            </ul>
+         </li>
+             <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Activity <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/fraternity">Fraternity</a></li>
+               <li><a href="/club">Club</a></li>
+               <li><a href="/activity">Activity</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Life <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/dining">Dining</a></li>
+               <li><a href="/housing">Housing</a></li>
+            </ul>
+         </li>
+          <li><a href="/gpahome">GPA Calculator</a></li>
+      </ul>
+   </div>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+      <form class="navbar-form navbar-right search" action="/search"  method=post role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" name=searchbox placeholder="Enter to Search" id="search_word">
+        </div>
+        <button type="submit" value="Search" class="btn btn-default">Submit</button>
+      </form>
+    <script>
+ $(document).ready(function (){
+          $.getJSON("/autocompletelist",function(data){
+              console.log(data)
+            $( "#search_word" ).autocomplete({
+              source:data
+            });
+          });
+        });
+
+  </script>
+</div>
+</nav>
+<div class=page>
+  <div style="background-color:#E3F6CE">
+  <center>
+    <div class="container">
+<br><br><br><br>
+
+<div class="form-group">
+  <table class="table table-striped">
+   {% if flag == 1 %}
+   <thead>
+      <tr>
+         <th><h2>Search Results</h2></th>
+      </tr>
+   </thead>
+      <tbody>
+
+        {% for prof in found_professor %}
+
+         <tr><td><h1><a href="/professor/{{prof[0]}}">{{prof[0]}}</h1></td>
+         </tr>
+
+        {% endfor %}
+        </tbody>
+    {% else %}
+     <thead>
+      <tr>
+         <th><h2>No Search Results. Are you trying to search one of the following items?</h2></th>
+      </tr>
+   </thead>
+       <tbody>
+         {% for prof in found_professor %}
+
+         <tr><td><h1><a href="/search/{{prof}}">{{ prof }}</a></h1></td>
+         </tr>
+
+        {% endfor %}
+
+
+   </tbody>
+      {%endif%}
+</table>
+</div>
+<div class="bottom">
+<img src="../static/Monsters-University-logo.jpg" class="img-responsive" alt="Responsive image">
+    </div>
+</div>
+
+<hr>
+    
+</div>
+
+</body>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+   <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+      <link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+</head>
+<body>
+  <div style="background-color:#E3F6CE">
+  <div class="container" style="background-color:white">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container" style="background-color:white">
+   <div class="navbar-header" >
+      <a class="navbar-brand" href="/">Monster University</a>
+   </div>
+      <div style="background-color:black">
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Academic <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/student">Student</a></li>
+               <li><a href="/professor">Professor</a></li>
+               <li><a href="/course">Course</a></li>
+               <li><a href="/seminar">Seminar</a></li>
+            </ul>
+         </li>
+      <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Activity <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/fraternity">Fraternity</a></li>
+               <li><a href="/club">Club</a></li>
+               <li><a href="/activity">Activity</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Life <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/dining">Dining</a></li>
+               <li><a href="/housing">Housing</a></li>
+            </ul>
+         </li>
+                   <li><a href="/gpahome">GPA Calculator</a></li>
+      </ul>
+   </div>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+      <form class="navbar-form navbar-right search" action="/search"  method=post role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" name=searchbox placeholder="Enter to Search" id="search_word">
+        </div>
+        <button type="submit" value="Search" class="btn btn-default">Submit</button>
+      </form>
+    <script>
+ $(document).ready(function (){
+          $.getJSON("/autocompletelist",function(data){
+              console.log(data)
+            $( "#search_word" ).autocomplete({
+              source:data
+            });
+          });
+        });
+
+  </script>
+</nav>
+
+
+   <br><br><br>
+   <center>
+
+<div class="page-header">
+   <h1>{{professors[0][1]}}
+      <small>{{professors[0][2]}}</small>
+   </h1>
+</div>
+<td><img id="pic" src="../static/professor{{professors[0][0]}}.jpg" class="img-circle" alt="2" width="200" height="200"></img></td>
+   <hr>
+<p><font size="4"><b>Course</b>: {{professors[0][3]}}</font></p>
+<p><font size="4"><b>Research Area</b> : {{professors[0][6]}}</font></p>
+</center>
+<hr>
+<br><br>
+<div class="center-block" style="width:800px">
+    <form action="/add/{{professors[0][1]}}" method=post class=add-entry>
+      <dl>
+        <dt>Title:
+        <dd><input type=text id="title" size=30 name=title class="form-control" placeholder="Please enter title">
+          <br>
+        <dt>Text:
+        <dd><textarea name=text id="content" rows=5 cols=40 class="form-control" placeholder="Please enter content"></textarea>
+          <br>
+        <dt>Name:
+        <dd><input type=text id="name" size=30 name=name class="form-control" placeholder="Please enter your name">
+        <br>
+        <dd><button id="sub" type=submit class="btn btn-default">Share</button>
+      </dl>
+    </form>
+<hr>
+  {% for entry in entries %}
+<div class="list-group">
+   <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">
+         {{ entry.title }}
+      </h4>
+   </a>
+   <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">
+         {{ entry.text|safe }}
+      </h4>
+      <p class="list-group-item-text">
+         {{ entry.name|safe }}
+      </p>
+   </a>
+</div>
+  {% endfor %}
+
+  <script>
+
+toastr.options.fadeOut = 2500;
+    $("#sub").click(function(){
+        toastr.info('Shared successfully', { timeOut: 10000 });
+    });
+    $("#title").click(function(){
+        toastr.info('Enter the title', { timeOut: 10000 });
+    });
+   $("#content").click(function(){
+        toastr.info('Enter the content', { timeOut: 10000 });
+    });
+   $("#name").click(function(){
+        toastr.info('Enter the name', { timeOut: 10000 });
+    });
+      $("#pic").mouseover(function(){
+        toastr.info('I am cool~~~', { timeOut: 20000 });
+    });
+
+  </script>

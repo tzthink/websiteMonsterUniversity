@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+   <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container" style="background-color:white">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="/">Monster University</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Academic <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/student">Student</a></li>
+               <li><a href="/professor">Professor</a></li>
+               <li><a href="/course">Course</a></li>
+               <li><a href="/seminar">Seminar</a></li>
+            </ul>
+         </li>
+             <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Activity <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/fraternity">Fraternity</a></li>
+               <li><a href="/club">Club</a></li>
+               <li><a href="/activity">Activity</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Life <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/dining">Dining</a></li>
+               <li><a href="/housing">Housing</a></li>
+            </ul>
+         </li>
+          <li><a href="/gpahome">GPA Calculator</a></li>
+      </ul>
+   </div>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+      <form class="navbar-form navbar-right search" action="/search"  method=post role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" name=searchbox placeholder="Enter to Search" id="search_word">
+        </div>
+        <button type="submit" value="Search" class="btn btn-default">Submit</button>
+      </form>
+    <script>
+ $(document).ready(function (){
+          $.getJSON("/autocompletelist",function(data){
+              console.log(data)
+            $( "#search_word" ).autocomplete({
+              source:data
+            });
+          });
+        });
+
+  </script>
+</div>
+</nav>
+<!--          new for gpa=================================================================================== -->
+
+
+<!--          new for mainpage=================================================================================== -->
+<div class=page>
+  <div style="background-color:#E3F6CE">
+  <center>
+    <div class="container">
+   <br><br><br><br>
+      <img src="http://cdn.dolimg.com/monstersuniversity/assets/internal_header_aboutMU_980x215.jpg">
+      <br> 
+  {% block body %}
+    <h2>Monster University currently has</h2>
+    <h2>   {{data[0]}} professors</h2>
+     <h2>   {{data[1]}} students</h2>
+  <h2>   {{data[2]}} courses</h2>
+   <br>   
+  {% endblock %}
+          <img src=" ../static/aaa.gif">
+          <hr>
+     <img height="100px" width="300px" src="http://cdn.dolimg.com/monstersuniversity/assets/monsters_logo_small.jpg">
+   </div>
+     </center>
+   </div>
+</div>
+</div><!--          new for mainpage=================================================================================== -->
